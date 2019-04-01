@@ -29,9 +29,19 @@ parameters:
     default: ""
 
   only_for_branch:
-    description: If, set, a specific branch for which slack status updates will be sent.
+    description: If set, a specific branch for which slack status updates will be sent.
     type: string
     default: ""
+
+  success_color:
+    descriotion: The color of success status messages.
+    type: string,
+    default: "#1CBF43"
+
+  failure_color:
+    descriotion: The color of failure status messages.
+    type: string,
+    default: "#ED5C5C"
 
 steps:
   - run:
@@ -108,7 +118,7 @@ steps:
                                     \"url\": \"$CIRCLE_BUILD_URL\" \
                                   } \
                                 ], \
-                                \"color\": \"#1CBF43\" \
+                                \"color\": \"<< parameters.success_color >>\" \
                               } \
                             ] \
                           } " << parameters.webhook >>
@@ -140,7 +150,7 @@ steps:
                           \"url\": \"$CIRCLE_BUILD_URL\" \
                         } \
                       ], \
-                      \"color\": \"#ed5c5c\" \
+                      \"color\": \"<< parameters.failure_color >>\" \
                     } \
                   ] \
                 } " << parameters.webhook >>
